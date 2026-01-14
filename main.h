@@ -25,5 +25,13 @@ extern char **environ;
 
 char *handle_input(char *input, ssize_t chars_read);
 
+/**
+ * build_argv - Builds argument vector from command string
+ * @cmd: Cleaned command string
+ *
+ * Return: NULL-terminated array of arguments
+ */
+char **build_argv(char *cmd);
+
 #endif /* MAIN_H */
 

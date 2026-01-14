@@ -36,12 +36,11 @@ int main(void)
 
 		if (child_id == 0)
 		{
-			char *argv[2];
+            char **argv;
+            
+            argv = build_argv(command);
 
-			argv[0] = command;
-			argv[1] = NULL;
-
-			execve(command, argv, environ);
+			execve(argv[0], argv, environ);
 
 			write(STDERR_FILENO,
 			      "./shell: No such file or directory\n", 34);
