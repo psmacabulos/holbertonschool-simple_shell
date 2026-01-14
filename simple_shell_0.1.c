@@ -14,12 +14,14 @@ int main(void)
 
     while (1)
     {
-        write(STDOUT_FILENO, "#cisfun$ ", 9);
+        if (isatty(STDIN_FILENO))
+            write(STDOUT_FILENO, "#cisfun$ ", 9);
 
         chars_read = getline(&user_input, &input_size, stdin);
         if (chars_read == -1)
         {
-            write(STDOUT_FILENO, "\n", 1);
+            if (isatty(STDIN_FILENO))
+                write(STDOUT_FILENO, "\n", 1);
             break;
         }
 
