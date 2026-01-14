@@ -15,4 +15,15 @@
 /* Global environment variable */
 extern char **environ;
 
+/**
+ * handle_input - Cleans and prepares user input
+ * @input: Buffer returned by getline
+ * @chars_read: Number of characters read by getline
+ *
+ * Return: Pointer to cleaned input, or NULL if empty
+ */
+
+char *handle_input(char *input, ssize_t chars_read);
+
 #endif /* MAIN_H */
+
