@@ -20,5 +20,6 @@ void print_error(char *shell_name, unsigned long line_number,
 
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, command, strlen(command));
-	write(STDERR_FILENO, ": not found\n", 13);
+	write(STDERR_FILENO, ": not found\n",
+	      strlen(": not found\n"));
 }
