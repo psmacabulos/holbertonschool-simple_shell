@@ -28,5 +28,8 @@ int main(int argc, char **argv)
 	}
 
 	free(user_input);
+	/* exit with 0 if exit was the first command */
+	if (last_status == EXIT_SHELL)
+		exit(0);
 	exit(last_status);
 }
