@@ -2,9 +2,9 @@
 
 /**
  * execute_input - Executes a single command line
- * @user_input: Raw input line
- * @shell_name: Name of the shell
- * @line_number: Current command count
+ * @user_input: Raw input read from stdin
+ * @shell_name: Name of the shell (argv[0])
+ * @line_number: Current command line number
  */
 void execute_input(char *user_input, char *shell_name,
 		   unsigned long line_number)
@@ -16,6 +16,16 @@ void execute_input(char *user_input, char *shell_name,
 	command = handle_input(user_input, strlen(user_input));
 	if (command == NULL)
 		return;
+
+	/*
+	 * Step 1 (Shell 0.3):
+	 * If command contains '/', check it directly without using PATH
+	 */
+	if (strchr(command, '/') && access(command, X_OK) == -1)
+	{
+		print_error(shell_name, line_number, command);
+		return;
+	}
 
 	child_id = fork();
 	if (child_id == 0)
