@@ -1,11 +1,11 @@
 #include "main.h"
 
 /**
- * main - Entry point for simple shell
+ * main - Entry point for the simple shell
  * @argc: Argument count
  * @argv: Argument vector
  *
- * Return: Always 0
+ * Return: Exit status
  */
 int main(int argc, char **argv)
 {
@@ -20,6 +20,12 @@ int main(int argc, char **argv)
 	{
 		line_number++;
 		last_status = execute_input(user_input, argv[0], line_number);
+
+		if (last_status == EXIT_SHELL)
+		{
+			last_status = 0;
+			break;
+		}
 	}
 
 	free(user_input);

@@ -12,8 +12,10 @@
 #include <unistd.h>     /* fork, execve, write, isatty */
 #include <sys/types.h>  /* pid_t */
 #include <sys/wait.h>   /* wait */
+#define EXIT_SHELL (-2)
 
 extern char **environ;
+
 
 /*
  * Input handling

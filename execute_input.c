@@ -24,6 +24,10 @@ int execute_input(char *user_input, char *shell_name,
 	if (argument_list == NULL || argument_list[0] == NULL)
 		return (0);
 
+	/* Handle exit builtin */
+	if (strcmp(argument_list[0], "exit") == 0)
+		return (EXIT_SHELL);
+
 	resolved_path = resolve_command_path(argument_list[0],
 					     shell_name,
 					     line_number);
