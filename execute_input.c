@@ -12,10 +12,6 @@ void execute_input(char *user_input, char *shell_name,
 	pid_t child_id;
 	char *command;
 	char **argument_list;
-	char *path_value;
-
-	path_value = get_path_value();
-	printf("%s", path_value);
 
 	command = handle_input(user_input, strlen(user_input));
 	if (command == NULL)

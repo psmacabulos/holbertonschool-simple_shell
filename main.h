@@ -23,6 +23,9 @@ char *handle_input(char *input, ssize_t chars_read);
 
 /* PATH handling */
 char *get_path_value(void);
+char *find_command_in_path(char *command);
+char *build_and_check_path(char *directory, char *command);
+
 
 /*
  * Command execution

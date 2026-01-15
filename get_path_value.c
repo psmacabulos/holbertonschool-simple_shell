@@ -12,7 +12,7 @@ char *get_path_value(void)
 	while (environ[i] != NULL)
 	{
 		if (strncmp(environ[i], "PATH=", 5) == 0)
-			return (environ[i] + 5);
+			return (environ[i] + 5); /* adjust the pointer towards '/' */
 		i++;
 	}
 
