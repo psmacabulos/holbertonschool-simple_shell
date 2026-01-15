@@ -11,10 +11,9 @@
 int execute_input(char *user_input, char *shell_name,
 		  unsigned long line_number)
 {
-	pid_t child_id;
-	char *command, *resolved_path;
+	char *command;
 	char **argument_list;
-	int status = 0;
+	int builtin_status;
 
 	command = handle_input(user_input, strlen(user_input));
 	if (command == NULL)
@@ -24,33 +23,9 @@ int execute_input(char *user_input, char *shell_name,
 	if (argument_list == NULL || argument_list[0] == NULL)
 		return (0);
 
-	/* Handle exit builtin */
-	if (strcmp(argument_list[0], "exit") == 0)
-		return (EXIT_SHELL);
+	builtin_status = handle_builtins(argument_list);
+	if (builtin_status != -1)
+		return (builtin_status);
 
-	resolved_path = resolve_command_path(argument_list[0],
-					     shell_name,
-					     line_number);
-	if (resolved_path == NULL)
-		return (127);
-
-	child_id = fork();
-	if (child_id == 0)
-	{
-		execve(resolved_path, argument_list, environ);
-		print_error(shell_name, line_number, argument_list[0]);
-		exit(127);
-	}
-	else if (child_id > 0)
-	{
-		wait(&status);
-	}
-
-	if (resolved_path != argument_list[0])
-		free(resolved_path);
-
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-
-	return (0);
+	return (launch_command(argument_list, shell_name, line_number));
 }

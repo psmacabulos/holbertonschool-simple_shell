@@ -10,12 +10,12 @@
 #include <stdlib.h>     /* malloc, free, exit */
 #include <string.h>     /* strtok, strlen */
 #include <unistd.h>     /* fork, execve, write, isatty */
-#include <sys/types.h>  /* pid_t */
+#include <sys/types.h>  /* pid_t, size_t */
 #include <sys/wait.h>   /* wait */
+
 #define EXIT_SHELL (-2)
 
 extern char **environ;
-
 
 /*
  * Input handling
@@ -23,7 +23,9 @@ extern char **environ;
 int read_input(char **user_input, size_t *input_size);
 char *handle_input(char *input, ssize_t chars_read);
 
-/* PATH handling */
+/*
+ * PATH handling
+ */
 char *get_path_value(void);
 char *find_command_in_path(char *command);
 char *build_and_check_path(char *directory, char *command);
@@ -31,13 +33,20 @@ char *resolve_command_path(char *command,
 			   char *shell_name,
 			   unsigned long line_number);
 
-
 /*
  * Command execution
  */
 int execute_input(char *user_input, char *shell_name,
 		   unsigned long line_number);
 char **build_argv(char *command);
+int launch_command(char **argument_list, char *shell_name,
+		   unsigned long line_number);
+
+/*
+ * Builtins
+ */
+int handle_builtins(char **argument_list);
+int print_env(void);
 
 /*
  * Error handling
