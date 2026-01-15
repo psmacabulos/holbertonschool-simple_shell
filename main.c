@@ -13,6 +13,7 @@ int main(int argc, char **argv)
 	size_t input_size = 0;
 	unsigned long line_number = 0;
 	int last_status = 0;
+	int last_cmd_status = 0;
 
 	(void)argc;
 
@@ -22,14 +23,16 @@ int main(int argc, char **argv)
 		last_status = execute_input(user_input, argv[0], line_number);
 
 		if (last_status == EXIT_SHELL)
-		{
 			break;
-		}
+
+		last_cmd_status = last_status;
 	}
 
 	free(user_input);
-	/* exit with 0 if exit was the first command */
+
+	/* If exit was called, return last real command status */
 	if (last_status == EXIT_SHELL)
-		exit(0);
-	exit(last_status);
+		exit(last_cmd_status);
+
+	exit(last_cmd_status);
 }
