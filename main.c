@@ -12,15 +12,16 @@ int main(int argc, char **argv)
 	char *user_input = NULL;
 	size_t input_size = 0;
 	unsigned long line_number = 0;
+	int last_status = 0;
 
 	(void)argc;
 
 	while (read_input(&user_input, &input_size))
 	{
 		line_number++;
-		execute_input(user_input, argv[0], line_number);
+		last_status = execute_input(user_input, argv[0], line_number);
 	}
 
 	free(user_input);
-	return (0);
+	exit(last_status);
 }

@@ -33,7 +33,7 @@ char *resolve_command_path(char *command,
 /*
  * Command execution
  */
-void execute_input(char *user_input, char *shell_name,
+int execute_input(char *user_input, char *shell_name,
 		   unsigned long line_number);
 char **build_argv(char *command);
 
