@@ -5,16 +5,16 @@
 This project is a simple UNIX command line interpreter written in C as part of the
 Holberton School curriculum.
 
-The shell replicates basic behavior of `/bin/sh`. It reads user input, parses it,
-executes commands found in the system `PATH`, and supports a small set of built-in
-commands.
+The shell reproduces basic behavior of `/bin/sh`. It reads commands from standard
+input, parses them, resolves executable paths using the `PATH` environment variable,
+and executes programs in child processes.
 
 This project focuses on understanding:
-- Process creation
-- System calls
-- Environment handling
-- Memory management
-- Basic shell architecture
+- How a shell works internally
+- Process creation and execution
+- Environment variables
+- Exit status handling
+- Modular C programming
 
 ---
 
@@ -40,8 +40,8 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 $ ./hsh
 ($) ls
 file1 file2
-($) pwd
-/home/user/simple_shell
+($) env
+PATH=/usr/bin:/bin
 ($) exit
 ```
 
@@ -57,19 +57,16 @@ file1 file2
 ## Features
 
 ### Supported Commands
-
 - Executes commands using absolute paths (e.g. `/bin/ls`)
-- Executes commands found in the `PATH` (e.g. `ls`)
-- Handles command arguments (e.g. `ls -l /tmp`)
-- Works in interactive and non-interactive modes
+- Executes commands found using the `PATH` environment variable
+- Supports command arguments (e.g. `ls -l /tmp`)
+- Works in both interactive and non-interactive modes
 
-### Built-ins
-
+### Built-in Commands
 - `exit` — exits the shell
 - `env` — prints the current environment
 
 ### Error Handling
-
 - Prints errors similar to `/bin/sh`
 - Returns correct exit status codes
 - Handles end-of-file (Ctrl + D)
@@ -79,23 +76,27 @@ file1 file2
 ## Project Structure
 
 | File | Description |
-|------|-------------|
+|------|------------|
 | `main.c` | Entry point and main shell loop |
-| `execute_input.c` | Processes and dispatches user input |
-| `launch_command.c` | Forks and executes external commands |
-| `handle_builtins.c` | Handles built-in commands |
-| `build_argv.c` | Tokenizes command input |
+| `read_input.c` | Reads input from standard input |
+| `execute_input.c` | Dispatches and processes commands |
 | `handle_input.c` | Cleans and trims user input |
-| `path.c` | PATH resolution utilities |
-| `print_error.c` | Error message handling |
-| `print_env.c` | env built-in implementation |
-| `main.h` | Header file |
+| `build_argv.c` | Tokenizes input into argument vectors |
+| `handle_builtins.c` | Handles built-in commands |
+| `print_env.c` | Implements the `env` built-in |
+| `launch_command.c` | Forks and executes external commands |
+| `resolve_command_path.c` | Determines how to resolve command paths |
+| `get_path_value.c` | Retrieves the PATH environment variable |
+| `find_command_in_path.c` | Searches PATH directories for commands |
+| `build_and_check_path.c` | Builds and validates executable paths |
+| `print_error.c` | Prints formatted error messages |
+| `main.h` | Header file with function prototypes and macros |
 
 ---
 
 ## Allowed Functions
 
-The project uses only allowed system calls and functions, including:
+Only allowed system calls and functions are used, including:
 
 - `fork`
 - `execve`
@@ -111,13 +112,13 @@ No prohibited functions such as `system()` are used.
 
 ## Limitations
 
-This shell does **not** support:
-
+This shell does not support:
 - Pipes (`|`)
 - Redirections (`>`, `<`)
 - Command chaining (`;`)
 - Wildcards (`*`)
-- Built-ins with arguments (e.g. `exit 2`)
+- Variable expansion (e.g. `$?`)
+- Built-in arguments (e.g. `exit 2`)
 
 ---
 
@@ -125,11 +126,12 @@ This shell does **not** support:
 
 Through this project, the following concepts were practiced:
 
-- How a shell works internally
 - Process lifecycle management
-- Environment variable handling
+- PATH resolution
+- Exit status propagation
+- Environment handling
 - Memory ownership and cleanup
-- Modular C programming
+- Code modularization
 
 ---
 
