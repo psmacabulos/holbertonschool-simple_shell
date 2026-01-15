@@ -21,6 +21,9 @@ extern char **environ;
 int read_input(char **user_input, size_t *input_size);
 char *handle_input(char *input, ssize_t chars_read);
 
+/* PATH handling */
+char *get_path_value(void);
+
 /*
  * Command execution
  */
