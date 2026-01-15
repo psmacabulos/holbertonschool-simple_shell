@@ -23,7 +23,6 @@ int main(int argc, char **argv)
 
 		if (last_status == EXIT_SHELL)
 		{
-			last_status = 0;
 			break;
 		}
 	}
