@@ -25,6 +25,9 @@ char *handle_input(char *input, ssize_t chars_read);
 char *get_path_value(void);
 char *find_command_in_path(char *command);
 char *build_and_check_path(char *directory, char *command);
+char *resolve_command_path(char *command,
+			   char *shell_name,
+			   unsigned long line_number);
 
 
 /*
