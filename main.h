@@ -1,37 +1,37 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/* Standard C libraries */
-#include <stdio.h>      /* printf, perror, getline */
+/*
+ * File: main.h
+ * Desc: Header file for simple shell project
+ */
+
+#include <stdio.h>      /* getline, snprintf */
 #include <stdlib.h>     /* malloc, free, exit */
-#include <string.h>     /* strtok, strcmp, strlen */
-
-/* UNIX system libraries */
-#include <unistd.h>     /* fork, execve, access */
+#include <string.h>     /* strtok, strlen */
+#include <unistd.h>     /* fork, execve, write, isatty */
 #include <sys/types.h>  /* pid_t */
-#include <sys/wait.h>   /* wait, waitpid */
-#include <errno.h>      /* errno */
+#include <sys/wait.h>   /* wait */
 
-/* Global environment variable */
 extern char **environ;
 
-/**
- * handle_input - Cleans and prepares user input
- * @input: Buffer returned by getline
- * @chars_read: Number of characters read by getline
- *
- * Return: Pointer to cleaned input, or NULL if empty
+/*
+ * Input handling
  */
-
+int read_input(char **user_input, size_t *input_size);
 char *handle_input(char *input, ssize_t chars_read);
 
-/**
- * build_argv - Builds argument vector from command string
- * @cmd: Cleaned command string
- *
- * Return: NULL-terminated array of arguments
+/*
+ * Command execution
  */
-char **build_argv(char *cmd);
+void execute_input(char *user_input, char *shell_name,
+		   unsigned long line_number);
+char **build_argv(char *command);
+
+/*
+ * Error handling
+ */
+void print_error(char *shell_name, unsigned long line_number,
+		 char *command);
 
 #endif /* MAIN_H */
-
